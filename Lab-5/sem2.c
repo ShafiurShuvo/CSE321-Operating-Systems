@@ -1,4 +1,4 @@
-// gcc -o sem1 sem1.c -lpthread
+// gcc -o sem2 sem2.c -lpthread
 // This program creates four threads that use a semaphore to control access to a critical section.
 // Each thread waits for the semaphore, enters the critical section, prints its ID, and then releases the semaphore.
 

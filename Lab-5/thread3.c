@@ -1,42 +1,48 @@
 // gcc -o thread3 thread3.c -lpthread
-// This program creates two threads: one for addition and one for subtraction.
-// Each thread receives two numbers and performs its respective operation.
-// The results are printed to the console.
+// This program creates a thread that allocates an array, fills it with user input, and returns it to the main thread.
+// The main thread then prints the values of the array.
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <pthread.h>
-void *t_func1(void *arg);
-void *t_func2(void *arg1);
-int t_id[2]={1,2};
-int a=10;
-int b=5;
-int main(){
-	int a1[3]={t_id[0],a,b};
-	int a2[3]={t_id[1],a,b};
-	pthread_t t1;
-	pthread_t t2;
-	pthread_create(&t1,NULL,(void *)t_func1,(void *)a1);
-	pthread_create(&t1,NULL,(void *)t_func2,(void *)a2);
-	pthread_join(t1,NULL);
-	pthread_join(t2,NULL);
-	
-	return 0;
+
+void* func_thread(void *arg);
+
+int main() {
+    pthread_t t1;
+    int n;
+    int *t_ret;
+
+    printf("Enter the size of the array:\n");
+    scanf("%d", &n);
+
+    pthread_create(&t1, NULL, func_thread, &n);
+    pthread_join(t1, (void**)&t_ret);
+
+    for (int i = 0; i < n; i++) {
+        printf("a[%d]: %d\n", i, t_ret[i]);
+    }
+
+    // Free allocated memory from thread
+    free(t_ret);
+
+    return 0;
 }
-void *t_func1(void *arg){
-	int *x=arg;
-	printf("Entered in Thread :%d\n",x[0]);
-	sleep(1);
-	int add=x[1]+x[2];
-	printf("ADD :%d\n",add);
-	printf("Addition Done by Thread %d...\n",x[0]);
-}
-void *t_func2(void *arg1){
-	int *y=arg1;
-	printf("Entered in Thread :%d\n",y[0]);
-	sleep(1);
-	int sub=y[1]-y[2];
-	printf("SUB :%d\n",sub);
-	printf("Substraction Done by Thread %d...\n",y[0]);
+
+// Thread function — allocates and fills an array
+void* func_thread(void *arg) {
+    int n = *(int*)arg;
+    int *a = malloc(sizeof(int) * n);
+    if (!a) {
+        perror("Memory allocation failed");
+        pthread_exit(NULL);
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("Enter value in a[%d]:\n", i);
+        scanf("%d", &a[i]);
+    }
+
+    return a;
 }

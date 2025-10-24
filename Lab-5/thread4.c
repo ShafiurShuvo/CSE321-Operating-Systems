@@ -1,35 +1,46 @@
 // gcc -o thread4 thread4.c -lpthread
-// This program creates a thread that allocates an array, fills it with user input, and returns it to the main thread.
-// The main thread then prints the values of the array.
+// This program creates two threads: one for addition and one for subtraction.
+// Each thread receives an array containing its ID and two integers, performs its operation.
+// The results are printed to the console.
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <pthread.h>
 
-int *func_thread(int *v);
-int *t_ret;
+void *t_func1(void *arg);
+void *t_func2(void *arg1);
+int t_id[]={1,2};
+int a=10;
+int b=5;
 
 int main(){
+	int a1[]={t_id[0],a,b};//{1,10,5}
+	int a2[]={t_id[1],a,b};//{2,10,5}
 	pthread_t t1;
-	int n;
-    printf("Enter the size of the array:\n");
-    scanf("%d",&n);
-	pthread_create(&t1,NULL,func_thread,&n);
-	pthread_join(t1,&t_ret);
+	pthread_t t2;
+	pthread_create(&t1,NULL,(void *)t_func1,(void *)a1);
+	pthread_create(&t2,NULL,(void *)t_func2,(void *)a2);
+	pthread_join(t1,NULL);
+	pthread_join(t2,NULL);
 	
-    for(int i=0;i<n;i++){
-        printf("a[%d]: %d\n",i,t_ret[i]);
-    }
-	free(t_ret);
-
 	return 0;
 }
-int *func_thread(int *v){
-    int *a=malloc(sizeof(int)*(*v));
-    for(int i=0;i<*v;i++){
-        printf("Enter value in a[%d]:\n",i);
-        scanf("%d",&a[i]);
-    }
-    return a;
+
+void *t_func1(void *arg){
+	int *x=arg;
+	printf("Entered in Thread :%d\n",x[0]);
+	sleep(1);
+	int add=x[1]+x[2];
+	printf("ADD :%d\n",add);
+	printf("Addition Done by Thread %d...\n",x[0]);
+}
+
+void *t_func2(void *arg1){
+	int *y=arg1;
+	printf("Entered in Thread :%d\n",y[0]);
+	sleep(1);
+	int sub=y[1]-y[2];
+	printf("SUB :%d\n",sub);
+	printf("Substraction Done by Thread %d...\n",y[0]);
 }
