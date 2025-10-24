@@ -1,5 +1,5 @@
 // Bidirectional communication using two pipes between parent and child process
-// One pipe for parent to child communication and another for child to parent communication
+// One pipe for parent-to-child communication and another for child-to-parent communication
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,52 +8,60 @@
 #include <fcntl.h>
 #include <sys/types.h>
 
-int main(){
-	int fd[2]; // parent → child
-    int fd1[2]; // child → parent
-	pid_t a;
-	char buff[200];
-	
-	int pipe_1=pipe(fd);
-	int pipe_2=pipe(fd1);
-	if(pipe_1==-1){
-		perror("pipe_1");
-	}
-	if(pipe_2==-1){
-		perror("pipe_2");
-	}
-	a=fork();
-	if(a<0){
-		perror("fork");
-	}
-	else if(a==0){  //child
-		close(fd[0]);  //cannot read, can only write in case of first pipe
-		close(fd1[1]); //cannot write, can only read in case of second pipe
-		printf("Give input in pipe_1:\n");  // child → parent
-		read(0,buff,sizeof(buff));
-		printf("This is child and I am Writing data for sending in pipe_1_____\n");
-		write(fd[1],buff,sizeof(buff));
-		printf("Writing in pipe_1 done_____\n");
-		printf("This is child and I am Reading data after receiving from pipe_2_____\n");
-		read(fd1[0],buff,sizeof(buff));
-		printf("Data received from pipe_2:\n%s\n",buff);
-		close(fd[1]);
-		close(fd1[0]);
-	}
-	else{ //parent
-		close(fd1[0]);  //cannot write, can only read
-		close(fd[1]);   //cannot read, can only write
-		printf("Give input in pipe_2:\n"); // parent → child
-		read(0,buff,sizeof(buff));
-		printf("This is parent and I am Writing data for sending in pipe_2_____\n");
-		write(fd1[1],buff,sizeof(buff));
-		printf("Writing in pipe_2 done_____\n");
-		printf("This is parent and I am Reading data after receiving from pipe_1_____\n");
-		read(fd[0],buff,sizeof(buff));
-		printf("Data received from pipe_1:\n%s\n",buff);
-		close(fd1[1]);
-		close(fd[0]);
-	}
+int main() {
+    int fd[2], fd1[2];
+    pid_t a;
+    char buff[200];
 
-	return 0;
+    if (pipe(fd) == -1) {
+        perror("pipe_1");
+        exit(1);
+    }
+    if (pipe(fd1) == -1) {
+        perror("pipe_2");
+        exit(1);
+    }
+
+    a = fork();
+    if (a < 0) {
+        perror("fork");
+        exit(1);
+    }
+    else if (a == 0) { // child
+        close(fd[0]);   // can't read from pipe_1, only write
+        close(fd1[1]);  // can't write to pipe_2, only read
+
+        printf("This is child, Give input for parent in pipe_1: ");
+        fgets(buff, sizeof(buff), stdin);
+
+        printf("Child sending data to parent...\n");
+        write(fd[1], buff, strlen(buff) + 1);
+
+        printf("This is child, I'm waiting to receive reply from parent...\n");
+        read(fd1[0], buff, sizeof(buff));
+
+        printf("This is child, I received reply from parent: %s\n", buff);
+
+        close(fd[1]);
+        close(fd1[0]);
+    }
+    else { // parent
+        close(fd[1]);   // can't write to pipe_1, only read
+        close(fd1[0]);  // can't read from pipe_2, only write
+
+        // Wait for child's message first
+        read(fd[0], buff, sizeof(buff));
+        printf("This is parent, I received message from child: %s\n", buff);
+
+        printf("This is parent, give reply to child in pipe_2: ");
+        fgets(buff, sizeof(buff), stdin);
+
+        printf("This is parent, I'm sending reply to child...\n");
+        write(fd1[1], buff, strlen(buff) + 1);
+
+        close(fd[0]);
+        close(fd1[1]);
+    }
+
+    return 0;
 }
