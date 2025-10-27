@@ -1,0 +1,23 @@
+Write three C programs(files)-
+
+Program 1---> Takes a number from the user and sends it to Messege queue with type 5.[2]
+
+Program 2---> Reads the message sent from Program 1 and checks whether it is an even number
+or not. If yes, Program 2 sends the number to the messege queue with type 6.[3]
+
+Program 3---> Reads the messege from messege queue and prints the value in the terminal.[2]
+
+Run sequence-
+            Program 1 ---> Program 2 ---> Program 3
+
+            User Input: 4
+            Sample Output:
+            Program 1 read complete and write complete
+            Program 2 read complete, Number is even. Write complete
+            Program 3 read complete. Number is 4.
+
+            User Input: 4
+            Sample Output:
+            Program 1 read complete and write complete
+            Program 2 read complete, Number is odd. No write
+            Program 3 read complete. No data found of type 6.
