@@ -1,3 +1,4 @@
+// execute like -> ./t 5 8 7 9 6
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -24,4 +25,5 @@ int main(int argc, char *argv[]){
 
     return 0;
 }
+
 
