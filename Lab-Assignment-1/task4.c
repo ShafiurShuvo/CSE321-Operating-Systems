@@ -16,11 +16,12 @@ int main(int argc, char *argv[]){
         exit(1);
     }
     else if (pid == 0){
-        execv("sort", argv);
+        execv("sort", argv);  // binary file name of sort.c
     }
     else{
-        execv("oddeven", argv);
+        execv("oddeven", argv);  // binary file name of oddeven.c
     }
 
     return 0;
 }
+
