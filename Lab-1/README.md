@@ -153,7 +153,7 @@ Example:
 
 - `bc` includes several math functions (like `s()`, `c()`, `sqrt()`, `l()`, `e()`).
 - Trigonometric functions use radians, not degrees.
-- Example:
+- **Example:**
   ```bash
   s(3.1416/2)
   ```
@@ -164,29 +164,29 @@ Example:
 ## 12. Working with Variables
 
 - You can assign variables in `bc` and reuse them:
-```bash
-  x=10
-  y=5
-  x*y
-  ```
-  ➤ Output: 50
+  ```bash
+    x=10
+    y=5
+    x*y
+    ```
+    ➤ Output: 50
 
 ---
 
 ## 13. Factor Command
 
-- **Command:** `factor number`
-Prints the prime factors of a given number (< 2⁴⁶).
-  ```bash
-  factor 60
-  ```
-  ➤ Output: `60: 2 2 3 5`
+- **Command:** `factor number`  
+  Prints the prime factors of a given number (< 2⁴⁶).
+    ```bash
+    factor 60
+    ```
+    ➤ Output: `60: 2 2 3 5`
 
 ---
 
 ## 14. Input Redirection
 
-- **Symbol:** `<`
+- **Symbol:** `<`  
   Takes input from a file instead of the keyboard.
   ```bash
   bc < input.txt
@@ -197,34 +197,34 @@ Prints the prime factors of a given number (< 2⁴⁶).
 
 ## 15. Output Redirection
 
-  - **Symbol:** `>`
-  Sends output to a file instead of displaying it on the screen.
-  ```bash
-  echo "Hello" > output.txt
-  ```
-  ➤ Writes “Hello” into `output.txt`.
+  - **Symbol:** `>`  
+    Sends output to a file instead of displaying it on the screen.
+    ```bash
+    echo "Hello" > output.txt
+    ```
+    ➤ Writes “Hello” into `output.txt`.
 
 ---
 
 ## 16. Append Output
 
-  - **Symbol:** `>>`
-  Appends new output to the end of an existing file.
-  ```bash
-  echo "More text" >> output.txt
-  ```
-  ➤ Adds “More text” to `output.txt` without overwriting previous data.
+  - **Symbol:** `>>`  
+    Appends new output to the end of an existing file.
+    ```bash
+    echo "More text" >> output.txt
+    ```
+    ➤ Adds “More text” to `output.txt` without overwriting previous data.
 
 ---
 
 ## 17. Calendar
 
   - **Command:** `cal`
-  Displays a calendar in the terminal.
-  ```bash
-  cal
-  ```
-  ➤ Shows the current month’s calendar.
+    Displays a calendar in the terminal.
+    ```bash
+    cal
+    ```
+    ➤ Shows the current month’s calendar.
 
 ---
 
@@ -240,108 +240,104 @@ Prints the prime factors of a given number (< 2⁴⁶).
 
 ## 19. Output First Lines (head)
 
-  **Command:** `head filename`
-  Displays the first 10 lines by default.
-  ```bash
-  head -n 5 file.txt
-  ```
-  ➤ Shows the first 5 lines of `file.txt`.
+  - **Command:** `head filename`  
+    Displays the first 10 lines by default.  
+    ```bash
+    head -n 5 file.txt
+    ```
+    ➤ Shows the first 5 lines of `file.txt`.
 
 ---
 
 ## 20. Output Last Lines (tail)
 
-  **Command:** `tail filename`
-  Displays the last 10 lines by default.
-  ```bash
-  tail -n 20 file.txt
-  ```
-  ➤ Shows the last 20 lines of `file.txt`.
+  - **Command:** `tail filename`  
+    Displays the last 10 lines by default.
+    ```bash
+    tail -n 20 file.txt
+    ```
+    ➤ Shows the last 20 lines of `file.txt`.
 
 ---
 
 ## 21. Sort Command
 
-  **Command:** `sort filename`
-  Sorts the lines of the file in ascending (alphabetical) order.
-  ```bash
-  sort names.txt
-  ```
-  ➤ Displays the file in sorted order.
+  - **Command:** `sort filename`  
+    Sorts the lines of the file in ascending (alphabetical) order.
+    ```bash
+    sort names.txt
+    ```
+    ➤ Displays the file in sorted order.
 
 ---
 
 ## 22. Print Number of Lines (wc)
 
-Command: wc filename
-Counts lines, words, and bytes in a file.
+  - **Command:** `wc filename`  
+    Counts lines, words, and bytes in a file.
+    
+  - **Options:**
+    
+      - `-l` → Show only line count.
+      
+      - `-w` → Show only word count.
+      ```bash
+      wc -l notes.txt
+      ```
+      ➤ Displays number of lines in `notes.txt`.
 
-Options:
+---
 
--l → Show only line count.
+## 23. Piping
 
--w → Show only word count.
+  - **Symbol:** `|`  
+    Sends output of one command as input to another.
+    ```bash
+    head -20 a.txt | tail -5
+    ```
+    ➤ Displays lines 15–20 of `a.txt`.
 
-wc -l notes.txt
+---
 
+## 24. Grep Command
 
-➤ Displays number of lines in notes.txt.
+  - **Command:** `grep pattern filename`  
+    Searches for matching text patterns in files.
+  - **Common Options:**
+      - `i` → Ignore case
+      - `c` → Count matches
+      - `E` → Use regular expressions
+      - `n` → Show line numbers
+      ```bash
+      grep -n "error" logfile.txt
+      ```
+      
+      ➤ Finds lines containing “error” with line numbers.
 
-23. Piping
+---
 
-Symbol: |
-Sends output of one command as input to another.
+## 25. Find Command
 
-head -20 a.txt | tail -5
+  - **Command:** `find [path] [options]`  
+    Searches for files and directories within a hierarchy.
+  - **Examples:**
+    ```bash
+    find -name "*.txt"              # find all text files
+    find -type d                    # find directories
+    find -type f -exec ls -l {} \;  # run command on each file
+    find /home -name "myfile"       # search a path
+    find -user username             # find files owned by a user
+    ```
+    ➤ Powerful tool for locating and acting on files.
+  
+---
 
+## 26. Manual and Identity Commands
 
-➤ Displays lines 15–20 of a.txt.
-
-24. Grep Command
-
-Command: grep pattern filename
-Searches for matching text patterns in files.
-
-Common Options:
-
--i → Ignore case
-
--c → Count matches
-
--E → Use regular expressions
-
--n → Show line numbers
-
-grep -n "error" logfile.txt
-
-
-➤ Finds lines containing “error” with line numbers.
-
-25. Find Command
-
-Command: find [path] [options]
-Searches for files and directories within a hierarchy.
-
-Examples:
-
-find -name "*.txt"              # find all text files
-find -type d                    # find directories
-find -type f -exec ls -l {} \;  # run command on each file
-find /home -name "myfile"       # search a path
-find -user username             # find files owned by a user
-
-
-➤ Powerful tool for locating and acting on files.
-
-26. Manual and Identity Commands
-
-uname → Displays system or kernel name.
-
-whoami → Shows the current logged-in username.
-
-man command → Displays manual/help for a command.
-
-man ls
-
-
-➤ Opens the manual for ls.
+  - `uname` → Displays system or kernel name.
+  - `whoami` → Shows the current logged-in username.
+  - `man command` → Displays manual/help for a command.
+  ```bash
+  man ls
+  ```
+  ➤ Opens the manual for `ls`.
