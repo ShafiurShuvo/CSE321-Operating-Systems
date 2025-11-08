@@ -341,3 +341,33 @@ Example:
   man ls
   ```
   ➤ Opens the manual for `ls`.
+
+## ⚙️ Quick Command Summary
+
+```bash
+ls        🠮 list files and directories
+cd        🠮 change directory
+cd ..     🠮 go back to previous directory
+touch     🠮 create an empty file
+cat       🠮 display or create files
+cp        🠮 copy files or directories
+mv        🠮 move or rename files
+rm        🠮 remove files or directories
+chmod     🠮 change file permissions
+cal       🠮 display calendar
+bc        🠮 open calculator
+head      🠮 show first 10 lines of a file
+tail      🠮 show last 10 lines of a file
+sort      🠮 sort lines in a file
+wc        🠮 count lines, words, and bytes
+grep      🠮 search for a pattern in a file
+find      🠮 search files or directories
+| (pipe)  🠮 send output of one command to another
+>         🠮 redirect output to a file
+>>        🠮 append output to a file
+<         🠮 take input from a file
+whoami    🠮 display current username
+uname     🠮 show system information
+```
+
+## ✅ End of Lab 1 – Linux Shell Commands
