@@ -370,4 +370,4 @@ whoami    🠮 display current username
 uname     🠮 show system information
 ```
 
-## ✅ End of Lab 1 – Linux Shell Commands
+## End of Lab 1 – Linux Shell Commands 🔚
