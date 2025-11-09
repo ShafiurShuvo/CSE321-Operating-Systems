@@ -1,6 +1,6 @@
 # CSE321 - Operating System
 
-This repository contains lab assignments, practice tasks, and projects completed during the CSE321 Operating System course. (Summer 2025)
+This repository contains lab assignments, practice tasks, and projects completed during the CSE321 Operating System course. **(Summer 2025)**
 
 <!--
 ## 📚 Course Overview
